@@ -2,29 +2,28 @@
  * Name: alpha_pkg_node.cpp
  
  * Author:  Shashank Shastry 	scshastr@eng.ucsd.edu
- 		   	    Sumukha Harish 		ssumukha@eng.ucsd.edu
- 		   	    Sai Adithya			  schittur@eng.ucsd.edu
+ 	    Sumukha Harish 	ssumukha@eng.ucsd.edu
+ 	    Sai Adithya		schittur@eng.ucsd.edu
  
  * Date: 02/26/2019
  
  * Description: This is the source file of the node in which 
- 				    the robot wanders, detects and interacts with humans. 
-            The robot is also capable of avoiding obstacles and 
-            carrying on exploring on its own.
+ 		the robot wanders, detects and interacts with humans. 
+            	The robot is also capable of avoiding obstacles and 
+            	carrying on exploring on its own.
 
-     				Topics subscribed to:
-     				1. "/camera/depth/points" 
-     				2. "/usb_cam/image_raw"
+		Topics subscribed to:
+		1. "/camera/depth/points" 
+		2. "/usb_cam/image_raw"
 
-     				Topics published:
-     				1. "cmd_vel_mux/input/teleop"
+		Topics published:
+		1. "cmd_vel_mux/input/teleop"
 
 * Usage:  roscore
-				  roslaunch turtlebot_bringup minimal.launch
-				  roslaunch astra_launch astra_pro.launch
+	  roslaunch turtlebot_bringup minimal.launch
+	  roslaunch astra_launch astra_pro.launch
           rosrun usb_cam usb_cam_node
-
-				  rosrun alpha_pkg alpha_pkg_node
+	  rosrun alpha_pkg alpha_pkg_node
 **************************************************************/
 
 #include <kobuki_msgs/BumperEvent.h> 
@@ -69,10 +68,10 @@ cv::CascadeClassifier face_cascade,eyes_cascade;
  * Function Name: PointCloud_Callback
 
  * Description: This is the callback function of the topic
- 				"/camera/depth/points". The function also computes
- 				the number of points that are closer than a threshold
- 				z_min and raises the obstacle_flag if the number of 
-        points are greater than a threshold (10)
+		"/camera/depth/points". The function also computes
+		the number of points that are closer than a threshold
+		z_min and raises the obstacle_flag if the number of 
+        	points are greater than a threshold (10)
 *************************************************************/
 void PointCloud_Callback (const PointCloud::ConstPtr& cloud){
 	double min_z = 0.7;
@@ -148,10 +147,10 @@ bool DetectHuman(cv::Mat frame)
 /************************************************************
  * Function Name: Cam_Callback
 
- * Description: This is the callback function for the usb_cam
-          node that is publishing camera data from the laptop
-          camera. The function uses the DetectHuman function 
-          to determine humans in the camera feed.
+ * Description:	This is the callback function for the usb_cam
+		node that is publishing camera data from the laptop
+		camera. The function uses the DetectHuman function 
+		to determine humans in the camera feed.
 *************************************************************/
 void Cam_Callback(const sensor_msgs::Image::ConstPtr& image_msg){
   // std::cout << "Got cam" << std::endl;
@@ -174,7 +173,7 @@ void Cam_Callback(const sensor_msgs::Image::ConstPtr& image_msg){
  * Function Name: rotate
 
  * Description: Generic function which makes the robot rotate
- 				about its z axis at constant angular velocity
+ 		about its z axis at constant angular velocity
 *************************************************************/
 void rotate(ros::Publisher& velocityPublisher, float angular_speed){
 	  geometry_msgs::Twist T;
@@ -188,7 +187,7 @@ void rotate(ros::Publisher& velocityPublisher, float angular_speed){
  * Function Name: advance
 
  * Description: Generic function which makes the robot 
- 				move forward with constant linear velocity.
+ 		move forward with constant linear velocity.
 *************************************************************/
 void advance(ros::Publisher& velocityPublisher){
     geometry_msgs::Twist T;
@@ -202,7 +201,7 @@ void advance(ros::Publisher& velocityPublisher){
  * Function Name: retreat
 
  * Description: Generic function which makes the robot 
- 				move backward with constant linear velocity.
+ 		move backward with constant linear velocity.
 *************************************************************/
 void retreat(ros::Publisher& velocityPublisher){
   	geometry_msgs::Twist T;
@@ -216,7 +215,7 @@ void retreat(ros::Publisher& velocityPublisher){
  * Function Name: draw_attention
 
  * Description: Makes the robot draw attention by spinning to
-        and fro on the spot.
+        	and fro on the spot.
 *************************************************************/
 void draw_attention(ros::Publisher& velocityPublisher){
   int time=10; // variable parameter
@@ -235,7 +234,7 @@ void draw_attention(ros::Publisher& velocityPublisher){
  * Function Name: interact
 
  * Description: Makes the robot interact with the human
-        by spinning to engaging in conversation.
+        	by spinning to engaging in conversation.
 *************************************************************/
 void interact(ros::Publisher& velocityPublisher){
   std::cout<<"How is your day going?"<<std::endl;
@@ -250,7 +249,7 @@ void interact(ros::Publisher& velocityPublisher){
  * Function Name: not_interact
 
  * Description: Makes the robot retreat and move away from the 
-        human not engaging in conversation.
+        	human not engaging in conversation.
 *************************************************************/
 void not_interact(ros::Publisher& velocityPublisher){
   std::cout<<"Have a good day!"<<std::endl;
